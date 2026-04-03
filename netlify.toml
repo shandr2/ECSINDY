@@ -1,19 +1,7 @@
 [build]
   publish = "."
 
-# Force HTTPS — Netlify handles this automatically, but this ensures redirects
-[[redirects]]
-  from = "http://ecsindy.com/*"
-  to = "https://www.ecsindy.com/:splat"
-  status = 301
-  force = true
-
-[[redirects]]
-  from = "http://www.ecsindy.com/*"
-  to = "https://www.ecsindy.com/:splat"
-  status = 301
-  force = true
-
+# Only redirect non-www to www (Netlify handles HTTP→HTTPS automatically)
 [[redirects]]
   from = "https://ecsindy.com/*"
   to = "https://www.ecsindy.com/:splat"
@@ -26,37 +14,34 @@
 [[headers]]
   for = "/*"
   [headers.values]
-    # Prevent clickjacking — only allow this site to frame itself
+    # Prevent clickjacking
     X-Frame-Options = "SAMEORIGIN"
 
     # Prevent MIME-type sniffing attacks
     X-Content-Type-Options = "nosniff"
 
-    # Control referrer information sent to other sites
+    # Control referrer information
     Referrer-Policy = "strict-origin-when-cross-origin"
 
-    # Block browser features not needed by this site
+    # Block unused browser features
     Permissions-Policy = "camera=(), microphone=(), geolocation=(), payment=(), usb=(), magnetometer=(), gyroscope=(), accelerometer=()"
 
     # XSS protection (legacy browsers)
     X-XSS-Protection = "1; mode=block"
 
-    # Force HTTPS for 1 year (tells browsers to always use HTTPS)
+    # Force HTTPS for 1 year
     Strict-Transport-Security = "max-age=31536000; includeSubDomains; preload"
 
-    # Content Security Policy — controls what resources can load
+    # Content Security Policy
     Content-Security-Policy = "default-src 'self'; script-src 'self' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https://fonts.googleapis.com; font-src 'self' https://fonts.gstatic.com; img-src 'self' data:; connect-src 'self'; frame-ancestors 'self'; base-uri 'self'; form-action 'self'"
 
-    # Prevent the site from being embedded in older IE
+    # Cross-origin policies
     X-Permitted-Cross-Domain-Policies = "none"
-
-    # Explicitly mark site does not use Flash or other cross-domain policies
-    Cross-Origin-Embedder-Policy = "unsafe-none"
     Cross-Origin-Opener-Policy = "same-origin"
     Cross-Origin-Resource-Policy = "same-origin"
 
 # ============================================
-# Cache static assets aggressively (1 year)
+# Cache static assets (1 year)
 # ============================================
 [[headers]]
   for = "/images/*"
@@ -73,19 +58,8 @@
   [headers.values]
     Cache-Control = "public, max-age=31536000, immutable"
 
-# HTML should revalidate (so updates are seen immediately)
+# HTML should revalidate
 [[headers]]
   for = "/*.html"
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
-
-# Security files — no cache
-[[headers]]
-  for = "/robots.txt"
-  [headers.values]
-    Cache-Control = "public, max-age=86400"
-
-[[headers]]
-  for = "/sitemap.xml"
-  [headers.values]
-    Cache-Control = "public, max-age=86400"
