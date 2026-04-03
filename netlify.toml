@@ -1,13 +1,6 @@
 [build]
   publish = "."
 
-# Redirect non-www to www for canonical URL consistency
-[[redirects]]
-  from = "https://ecsindy.com/*"
-  to = "https://www.ecsindy.com/:splat"
-  status = 301
-  force = true
-
 # ============================================
 # Security Headers
 # ============================================
@@ -47,13 +40,3 @@
   for = "/*.html"
   [headers.values]
     Cache-Control = "public, max-age=0, must-revalidate"
-
-[[headers]]
-  for = "/robots.txt"
-  [headers.values]
-    Cache-Control = "public, max-age=86400"
-
-[[headers]]
-  for = "/sitemap.xml"
-  [headers.values]
-    Cache-Control = "public, max-age=86400"
