@@ -1,0 +1,16 @@
+# robots.txt for ECSINDY.COM
+# https://www.ecsindy.com/robots.txt
+
+User-agent: *
+Allow: /
+
+# Sitemap location
+Sitemap: https://www.ecsindy.com/sitemap.xml
+
+# Crawl delay (optional, be gentle with server)
+Crawl-delay: 5
+
+# Block common non-content paths
+Disallow: /tmp/
+Disallow: /node_modules/
+Disallow: /.git/
