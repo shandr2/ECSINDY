@@ -734,18 +734,18 @@ ul {
     display: flex;
     align-items: center;
     justify-content: center;
-    background: var(--c-red-subtle);
-    border: 1px solid rgba(220,38,38,0.15);
+    background: var(--g-red);
     border-radius: var(--r-md);
     margin-bottom: 20px;
-    color: var(--c-red);
+    color: var(--c-white);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+    border: 1px solid rgba(255, 255, 255, 0.1);
     transition: all var(--t-normal);
 }
 
 .service-card:hover .service-icon {
-    background: var(--g-red);
-    color: var(--c-white);
-    border-color: transparent;
+    transform: scale(1.1) translateY(-2px);
+    box-shadow: 0 8px 25px rgba(220, 38, 38, 0.4);
 }
 
 .service-icon svg {
