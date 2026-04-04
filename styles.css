@@ -685,12 +685,40 @@ ul {
     overflow: hidden;
     transition: all var(--t-normal);
     position: relative;
+    min-height: 340px;
 }
 
 .service-card:hover {
     border-color: var(--c-border-hover);
     transform: translateY(-4px);
     box-shadow: 0 20px 60px rgba(0,0,0,0.3);
+}
+
+.service-card-bg {
+    position: absolute;
+    inset: 0;
+    z-index: 0;
+}
+
+.service-card-bg img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    opacity: 0.2;
+    transition: opacity var(--t-normal), transform 0.6s ease;
+}
+
+.service-card:hover .service-card-bg img {
+    opacity: 0.3;
+    transform: scale(1.05);
+}
+
+.service-card-bg::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(160deg, rgba(10,10,15,0.92) 30%, rgba(10,10,15,0.65));
+    z-index: 1;
 }
 
 .service-card-content {
@@ -735,37 +763,6 @@ ul {
     font-size: 0.92rem;
     color: var(--c-text-secondary);
     line-height: 1.7;
-}
-
-.service-card-featured {
-    grid-column: span 2;
-    position: relative;
-    min-height: 280px;
-}
-
-.service-card-featured .service-card-bg {
-    position: absolute;
-    inset: 0;
-    z-index: 0;
-}
-
-.service-card-featured .service-card-bg img {
-    width: 100%;
-    height: 100%;
-    object-fit: cover;
-    opacity: 0.25;
-    transition: opacity var(--t-normal);
-}
-
-.service-card-featured:hover .service-card-bg img {
-    opacity: 0.35;
-}
-
-.service-card-featured .service-card-bg::after {
-    content: '';
-    position: absolute;
-    inset: 0;
-    background: linear-gradient(135deg, rgba(10,10,15,0.95) 40%, rgba(10,10,15,0.6));
 }
 
 .service-tag {
