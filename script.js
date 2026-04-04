@@ -164,32 +164,50 @@ document.addEventListener('DOMContentLoaded', () => {
     const contactForm = document.getElementById('contact-form');
     const submitBtn = document.getElementById('contact-submit');
 
-    contactForm.addEventListener('submit', (e) => {
-        e.preventDefault();
-        
-        const btnText = submitBtn.querySelector('span');
-        const originalText = btnText.textContent;
-        
-        // Disable button and show sending state
-        submitBtn.disabled = true;
-        btnText.textContent = 'Sending...';
-        submitBtn.style.opacity = '0.7';
-        
-        // Simulate form submission
-        setTimeout(() => {
-            btnText.textContent = 'Message Sent! ✓';
-            submitBtn.style.background = 'linear-gradient(135deg, #16a34a, #22c55e)';
-            submitBtn.style.opacity = '1';
+    if (contactForm) {
+        contactForm.addEventListener('submit', (e) => {
+            e.preventDefault();
             
-            // Reset form
-            setTimeout(() => {
-                contactForm.reset();
-                btnText.textContent = originalText;
-                submitBtn.disabled = false;
-                submitBtn.style.background = '';
-            }, 3000);
-        }, 1500);
-    });
+            const btnText = submitBtn.querySelector('span');
+            const originalText = btnText.textContent;
+            
+            // Disable button and show sending state
+            submitBtn.disabled = true;
+            btnText.textContent = 'Sending...';
+            submitBtn.style.opacity = '0.7';
+
+            const formData = new FormData(contactForm);
+
+            fetch("/", {
+                method: "POST",
+                headers: { "Content-Type": "application/x-www-form-urlencoded" },
+                body: new URLSearchParams(formData).toString(),
+            })
+            .then(() => {
+                btnText.textContent = 'Message Sent! ✓';
+                submitBtn.style.background = 'linear-gradient(135deg, #16a34a, #22c55e)';
+                submitBtn.style.opacity = '1';
+                
+                // Reset form
+                setTimeout(() => {
+                    contactForm.reset();
+                    btnText.textContent = originalText;
+                    submitBtn.disabled = false;
+                    submitBtn.style.background = '';
+                }, 3000);
+            })
+            .catch((error) => {
+                btnText.textContent = 'Error Sending';
+                submitBtn.style.background = 'linear-gradient(135deg, #dc2626, #ef4444)';
+                submitBtn.style.opacity = '1';
+                setTimeout(() => {
+                    btnText.textContent = originalText;
+                    submitBtn.disabled = false;
+                    submitBtn.style.background = '';
+                }, 3000);
+            });
+        });
+    }
 
     // --- Parallax Effect on Hero ---
     const heroBg = document.querySelector('.hero-bg-img');
